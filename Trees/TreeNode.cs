@@ -74,9 +74,9 @@ namespace Trees
             //TODO #6: Return the height of this tree
             int alturaMaxima = 0;
 
-            if (Children.Count == 0)
+            if (Children.Count() == 0)
             {
-                return 1;
+                return 0;
             }
 
             foreach (TreeNode<T> child in Children)
@@ -91,7 +91,7 @@ namespace Trees
                 }
             }
           
-            return alturaMaxima;
+            return 1 + alturaMaxima;
         }
 
 
@@ -121,7 +121,10 @@ namespace Trees
         public TreeNode<T> Find(T value)
         {
             //TODO #8: Return the node that contains this value (it might be this node or a child). Apply recursively
-
+            if (this.Value.Equals(value))
+            {
+                return this;
+            }
             for (int i= 0; i < Children.Count; i++)
             {
                 TreeNode<T> objetivo = Children[i];
