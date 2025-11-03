@@ -1,5 +1,7 @@
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Lists;
 
 namespace Trees
@@ -32,20 +34,21 @@ namespace Trees
 
             for (int childIndex = 0; childIndex < Children.Count(); childIndex++)
             {
-                TreeNode<T> child = Children.Get(childIndex);
+                TreeNode<T> child = Children[childIndex];
                 output += child.ToString(depth + 1, childIndex);
             }
             return output;
             
-            return null;
+            
         }
 
         public TreeNode<T> Add(T value)
         {
             //TODO #4: Add a new instance of class GenericTreeNode<T> with Value=value. Return the instance we just created
-            GenericTreeNode<T> Value = value;
+            TreeNode<T> nuevoNodo = new TreeNode<T>(value);
+            Children.Add(nuevoNodo);
         
-            return Value;
+            return nuevoNodo;
             
         }
 
@@ -53,7 +56,7 @@ namespace Trees
         {
             //TODO #5: Return the total number of elements in this tree
 
-            int contador;
+            int contador = 0;
 
             foreach (TreeNode<T> child in Children)
             {
@@ -70,7 +73,7 @@ namespace Trees
         {
             //TODO #6: Return the height of this tree
 
-            int alturaMaxima
+            int alturaMaxima = 0;
 
             if (Children.Count() == 0)
             {
@@ -79,7 +82,7 @@ namespace Trees
 
             for (int i=0; i < Children.Count(); i++)
             {
-                TreeNode<T> child = Children.Get(i);
+                TreeNode<T> child = Children[i];
                 int alturaRama = child.Height();
 
                 if (alturaRama  < alturaMaxima )
@@ -87,25 +90,52 @@ namespace Trees
                     alturaMaxima = alturaRama;
                 }
 
-
             }
           
             return alturaMaxima;
             
         }
 
-        
 
-        
+
+
         public void Remove(T value)
         {
             //TODO #7: Remove the child node that has Value=value. Apply recursively
-            
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                TreeNode<T> child = Children[i];
+
+                if (child.Value.Equals(value))
+                {
+
+                    Children.Remove(child);
+                }
+
+                child.Remove(value);
+
+            }
+
+
         }
 
         public TreeNode<T> Find(T value)
         {
             //TODO #8: Return the node that contains this value (it might be this node or a child). Apply recursively
+
+            for (int i= 0; i < Children.Count; i++)
+            {
+                TreeNode<T> objetivo = Children[i];
+
+
+                TreeNode<T> temporal = objetivo.Find(value);
+
+                if (temporal != null)
+                {
+                    return temporal;
+                }
+            }
             
             return null;
         }
@@ -114,6 +144,18 @@ namespace Trees
         public void Remove(TreeNode<T> node)
         {
             //TODO #9: Same as #6, but this method is given the specific node to remove, not the value
+
+            for (int i= 0; i < Children.Count; i++)
+            {
+                if (Children[i].Equals(node))
+                {
+                    Children.Remove(node);
+                }
+                else
+                {
+                    Children[i].Remove(node);
+                }
+            }
             
         }
     }
