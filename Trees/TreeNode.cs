@@ -10,7 +10,7 @@ namespace Trees
     {
         private T Value;
         //TODO #1: Declare a member variable called "Children" as a list of TreeNode<T> objects
-        
+
         List<TreeNode<T>> Children = new List<TreeNode<T>>();
 
         public TreeNode(T value)
@@ -18,13 +18,13 @@ namespace Trees
             //TODO #2: Initialize member variables/attributes
             this.Value = value;
 
-            
+
         }
 
         public string ToString(int depth, int index)
         {
             //TODO #3: Uncomment the code below
-            
+
             string output = null;
             string leftSpace = null;
             for (int i = 0; i < depth; i++) leftSpace += " ";
@@ -38,8 +38,8 @@ namespace Trees
                 output += child.ToString(depth + 1, childIndex);
             }
             return output;
-            
-            
+
+
         }
 
         public TreeNode<T> Add(T value)
@@ -47,53 +47,51 @@ namespace Trees
             //TODO #4: Add a new instance of class GenericTreeNode<T> with Value=value. Return the instance we just created
             TreeNode<T> nuevoNodo = new TreeNode<T>(value);
             Children.Add(nuevoNodo);
-        
+
             return nuevoNodo;
-            
+
         }
 
         public int Count()
         {
             //TODO #5: Return the total number of elements in this tree
 
-            int contador = 0;
+            int contador = 1;
 
             foreach (TreeNode<T> child in Children)
             {
                 contador = contador + child.Count();
-                
+
             }
 
 
             return contador;
-            
+
         }
 
         public int Height()
         {
             //TODO #6: Return the height of this tree
-
             int alturaMaxima = 0;
 
-            if (Children.Count() == 0)
+            if (Children.Count == 0)
             {
-                return 0;
+                return 1;
             }
 
-            for (int i=0; i < Children.Count(); i++)
+            foreach (TreeNode<T> child in Children)
             {
-                TreeNode<T> child = Children[i];
+
                 int alturaRama = child.Height();
 
-                if (alturaRama  < alturaMaxima )
+                if (alturaRama > alturaMaxima)
                 {
                     alturaMaxima = alturaRama;
+            
                 }
-
             }
           
             return alturaMaxima;
-            
         }
 
 
