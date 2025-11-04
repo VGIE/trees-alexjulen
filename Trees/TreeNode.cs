@@ -107,7 +107,7 @@ namespace Trees
                 if (child.Value.Equals(value))
                 {
 
-                    Children.Remove(child);
+                    Children.Remove(i);
                 }
 
                 child.Remove(value);
