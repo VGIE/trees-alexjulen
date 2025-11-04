@@ -33,7 +33,7 @@ namespace Trees
 
             for (int childIndex = 0; childIndex < Children.Count(); childIndex++)
             {
-                TreeNode<T> child = Children[childIndex];
+                TreeNode<T> child = Children.Get(childIndex);
                 output += child.ToString(depth + 1, childIndex);
             }
             return output;
@@ -100,9 +100,9 @@ namespace Trees
         {
             //TODO #7: Remove the child node that has Value=value. Apply recursively
 
-            for (int i = 0; i < Children.Count; i++)
+            for (int i = 0; i < Children.Count(); i++)
             {
-                TreeNode<T> child = Children[i];
+                TreeNode<T> child = Children.Get(i);
 
                 if (child.Value.Equals(value))
                 {
@@ -124,9 +124,9 @@ namespace Trees
             {
                 return this;
             }
-            for (int i= 0; i < Children.Count; i++)
+            for (int i= 0; i < Children.Count(); i++)
             {
-                TreeNode<T> objetivo = Children[i];
+                TreeNode<T> objetivo = Children.Get(i);
 
 
                 TreeNode<T> temporal = objetivo.Find(value);
@@ -145,15 +145,15 @@ namespace Trees
         {
             //TODO #9: Same as #6, but this method is given the specific node to remove, not the value
 
-            for (int i= 0; i < Children.Count; i++)
+            for (int i= 0; i < Children.Count(); i++)
             {
-                if (Children[i].Equals(node))
+                if (Children.Get(i).Equals(node))
                 {
-                    Children.Remove(node);
+                    Children.Remove(i);
                 }
                 else
                 {
-                    Children[i].Remove(node);
+                    Children.Get(i).Remove(node);
                 }
             }
             
