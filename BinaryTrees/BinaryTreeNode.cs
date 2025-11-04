@@ -1,5 +1,6 @@
 
 using System;
+using System.Xml;
 namespace BinaryTrees
 {
     public class BinaryTreeNode<TKey, TValue> where TKey : IComparable<TKey>
@@ -74,7 +75,7 @@ namespace BinaryTrees
             //          -If the current node and the new node have the same key, just update this node's value with the new node's value
             else if (comparacion == 0)
             {
-                this.Key = node.Key;
+                this.Value = node.Value;
 
             }
             
@@ -84,16 +85,47 @@ namespace BinaryTrees
         public int Count()
         {
             //TODO #3: Return the total number of elements in this tree
-            
-            return 0;
+            int contador = 1;
+            if (LeftChild != null) {
+                contador = contador + LeftChild.Count();
+            }
+            if (RightChild != null) {
+                contador = contador + RightChild.Count();
+            }
+            return contador;
             
         }
 
         public int Height()
         {
             //TODO #4: Return the height of this tree
+
+            int contadorLeft = 0;
+            int contadorRight = 0;
+
+            if (LeftChild == null && RightChild == null)
+            {
+                return 0;
+            }
+           
+            if (LeftChild != null)
+            {
+                contadorLeft = contadorLeft + LeftChild.Height();
+            }
+            if (RightChild != null)
+            {
+                contadorRight = contadorRight + RightChild.Height();
+            }
+            if (contadorRight > contadorLeft)
+            {
+                return contadorRight + 1;
+            }
+            else
+            {
+                return contadorLeft + 1;
+            }
+
             
-            return 0;
             
         }
 
@@ -105,21 +137,94 @@ namespace BinaryTrees
             //              b) Else, we should ask the LeftChild to find the node recursively. It must be below LeftChild
             //          -If the current node has a lower key that the new node (use CompareTo()), the key should be on this node's right side.
             //          -If the current node and the new node have the same key, just return this node's value. We found it
+
+            int comparacion = this.Key.CompareTo(key);
             
-            return default;
+            if (comparacion == 0)
+            {
+                return this.Value;
+            }
+            else if (comparacion > 0)
+            {
+                if (LeftChild == null)
+                {
+                    return default;
+                }
+                else
+                {
+                    return LeftChild.Get(key);
+                }
+            }
+            else
+            {
+                if (RightChild == null)
+                {
+                    return default;
+
+                }
+                return RightChild.Get(key);
+            }
+            
+            
+                
+            
+
+            
             
         }
 
-        
+
 
         public BinaryTreeNode<TKey, TValue> Remove(TKey key)
         {
-            //TODO #6: Remove the node that has this key. The parent may need to update one of its children,
-            //so this method returns the node with which this node needs to be replaced. If this node isn't the
-            //one we are looking for, we will return this, so that the parent node can replace LeftChild/RightChild
-            //with the same node it had.
             
-            return null;
+           int comparacion = this.Key.CompareTo(key);
+
+            if (comparacion == 0)
+            {
+                if (RightChild == null && LeftChild == null)
+                {
+                    return null;
+                }
+                else if (RightChild == null && LeftChild != null)
+                {
+                    return LeftChild;
+                }
+                else if (RightChild != null && LeftChild == null)
+                {
+                    return RightChild;
+                }
+                else
+                {
+                    LeftChild.Add(RightChild);
+                    return LeftChild;
+                }
+
+            }
+            else if (comparacion > 0)
+            {
+                if (LeftChild == null)
+                {
+                    return this;
+                }
+                else
+                {
+                    LeftChild = LeftChild.Remove(key);
+                    return this;
+                }
+            }
+            else
+            {
+                if (RightChild == null)
+                {
+                    return this;
+
+                }
+                RightChild = RightChild.Remove(key);
+                return this;
+            }
+            
+            
             
         }
 
